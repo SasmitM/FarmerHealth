@@ -164,3 +164,8 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.resources-btn {
+  font-size: 5rem;
+  font-family: 'Afacad', sans-serif;
+}

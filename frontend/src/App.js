@@ -248,6 +248,7 @@ function AppContent() {
     zIndex: 9999,
   }}>
     <button
+      className="resources-btn"
       onClick={() => navigate('/resources')}
       style={{
         fontFamily: "'Afacad', sans-serif",
@@ -256,7 +257,7 @@ function AppContent() {
         border: 'none',
         borderRadius: '10px',
         padding: '10px 20px',
-        fontSize: '1rem',
+        fontSize: '5rem',
         cursor: 'pointer',
       }}
     >
