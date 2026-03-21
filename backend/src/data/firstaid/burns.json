@@ -1,0 +1,13 @@
+{
+  "id": "burns",
+  "name": "Burns",
+  "overview": "Burns on the farm can come from equipment, engines, welding, or chemicals. Cool the burn quickly to limit damage.",
+  "steps": [
+    { "title": "Cool the burn", "detail": "Hold under cool (not ice) running water for 10–20 minutes. Or use a cool, wet cloth." },
+    { "title": "Remove jewelry or tight items", "detail": "Do this gently before swelling starts." },
+    { "title": "Cover loosely", "detail": "Use a sterile bandage or clean cloth. Don't break blisters." },
+    { "title": "Manage pain", "detail": "Over-the-counter pain reliever can help. Do not use butter, oil, or home remedies on burns." }
+  ],
+  "when_to_seek_help": "Call 911 for: burns larger than 3 inches, burns on face, hands, feet, or joints, chemical or electrical burns, or trouble breathing. Go to urgent care for blisters or burns that don't improve.",
+  "prevention_tips": ["Let engines and exhausts cool before servicing.", "Wear gloves and eye protection when welding.", "Store chemicals away from heat and flames."]
+}

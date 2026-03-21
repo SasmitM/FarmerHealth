@@ -1,0 +1,10 @@
+[
+  { "id": "pesticide-exposure", "name": "Pesticide Exposure" },
+  { "id": "cuts-wounds", "name": "Cuts & Wounds" },
+  { "id": "burns", "name": "Burns" },
+  { "id": "animal-bites", "name": "Animal Bites" },
+  { "id": "machinery-injury", "name": "Machinery Injury" },
+  { "id": "heat-stroke", "name": "Heat Stroke" },
+  { "id": "chemical-splash", "name": "Chemical Splash" },
+  { "id": "respiratory-distress", "name": "Respiratory Distress" }
+]

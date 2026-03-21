@@ -1,0 +1,14 @@
+{
+  "id": "machinery-injury",
+  "name": "Machinery Injury",
+  "overview": "Tractors, PTO shafts, augers, and other equipment can cause crushing, amputation, or entanglement. Safety first: turn off machinery before helping.",
+  "steps": [
+    { "title": "Turn off the machinery", "detail": "Shut off the engine and disconnect power before approaching. Do not try to free someone from running equipment." },
+    { "title": "Call 911", "detail": "Machinery injuries are often serious. Call for help immediately." },
+    { "title": "Stop bleeding", "detail": "Apply direct pressure with a clean cloth. For severe bleeding, use a tourniquet only if trained and blood loss is life-threatening." },
+    { "title": "Stabilize the person", "detail": "Keep them still and calm. If a limb is trapped, wait for emergency responders unless there is immediate danger." },
+    { "title": "Preserve amputated parts", "detail": "Wrap in clean cloth, place in a plastic bag, and put the bag on ice. Do not put the part directly on ice." }
+  ],
+  "when_to_seek_help": "Call 911 for any machinery injury involving entanglement, crushing, amputation, or loss of consciousness. Do not move the person unless necessary for safety.",
+  "prevention_tips": ["Never wear loose clothing around PTO shafts or rotating parts.", "Use guards and shields; never remove them.", "Stay clear of machinery when others are operating it."]
+}
