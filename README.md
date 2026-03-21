@@ -1,4 +1,4 @@
-# FarmerHealth (FarmAid Health)
+# FarmerHealth 
 
 Health tools for rural farmers — risk education, symptom checker, and first aid guide.
 
