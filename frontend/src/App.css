@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  background-color: #f7f3ee;
+  min-height: 100vh;
+}
+
+.navbar {
+  text-align: left;
+  font-size: 30px;
+  margin-left: 35px;
+  padding-top: 24px;
+  color: #1f3b4f;
 }
 
 button {
