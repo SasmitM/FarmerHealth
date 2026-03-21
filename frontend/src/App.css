@@ -19,6 +19,11 @@ html {
   background-color: #f7f3ee;
   min-height: 100vh;
   padding-bottom: 110px;
+  position: relative;
+}
+
+.App > div {
+  overflow: visible !important;
 }
 
 .navbar {

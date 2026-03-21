@@ -18,6 +18,7 @@ import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation, us
 import Launch from './launch.js';
 import FirstAid from './firstaid.js';
 import useScrollAnimation from './useScrollAnimation';
+import Resources from './resources.js';
 
 function AppContent() {
   const location = useLocation();
@@ -238,8 +239,35 @@ function AppContent() {
           </Link>
         </nav>
       )}
+
+      {location.pathname === '/' && (
+  <div style={{
+    position: 'fixed',
+    top: '32px',
+    right: '40px',
+    zIndex: 9999,
+  }}>
+    <button
+      onClick={() => navigate('/resources')}
+      style={{
+        fontFamily: "'Afacad', sans-serif",
+        backgroundColor: '#59775e',
+        color: '#fff',
+        border: 'none',
+        borderRadius: '10px',
+        padding: '10px 20px',
+        fontSize: '1rem',
+        cursor: 'pointer',
+      }}
+    >
+      Resources
+    </button>
+  </div>
+)}
+
       <Routes>
         <Route path="/" element={<Launch />} />
+        <Route path="/resources" element={<Resources />} />
         <Route path="/main" element={<>
           <ToggleButtonGroup
             color="primary"
