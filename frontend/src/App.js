@@ -1,26 +1,30 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import React from 'react';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 function App() {
+  const [alignment, setAlignment] = React.useState('risk');
+
+  const handleChange = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
+
   return (
     <div className="App">
-      <nav classname = "navbar">
-        <span className="navbar-logo">FarmerHealth</span>
-      </nav>
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>FarmerHealth</h1>
+      <ToggleButtonGroup
+        color="primary"
+        value={alignment}
+        exclusive
+        onChange={handleChange}
+        aria-label="Platform"
+      >
+        <ToggleButton value="risk">Risk</ToggleButton>
+        <ToggleButton value="symptoms">Symptoms</ToggleButton>
+      </ToggleButtonGroup>
     </div>
   );
 }
