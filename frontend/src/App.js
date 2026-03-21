@@ -67,15 +67,15 @@ function App() {
   };
 
   return (
-    <Router>
+    // <Router>
     <div className="App">
       <nav className="navbar">
         <h1>FarmerHealth</h1>
       </nav>
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Launch />} />
         <Route path="/main" element={
-        <>
+        <> */}
       <ToggleButtonGroup
         color="primary"
         value={alignment}
@@ -315,11 +315,11 @@ function App() {
 </Box>
         </Box>
       </Drawer>
-      </>
+      {/* </>
         } />
-      </Routes>
+      </Routes> */}
     </div>
-    </Router>
+    // </Router>
   );
 }
 
