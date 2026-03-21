@@ -2,74 +2,51 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from '@mui/material/Grid';
 
 function FirstAid() {
+  const [bundle, setBundle] = React.useState(null);
+  const [activeCategory, setActiveCategory] = React.useState(null);
   const [categories, setCategories] = React.useState([]);
-  const [selectedCategory, setSelectedCategory] = React.useState(null);
-  const [categoryDetails, setCategoryDetails] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
-  const [detailsLoading, setDetailsLoading] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
-  // Fetch categories on mount
   React.useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchBundle = async () => {
       try {
-        const res = await fetch('/api/firstaid/categories');
-        if (!res.ok) throw new Error('Failed to fetch categories');
+        const res = await fetch('/api/firstaid/bundle');
+        if (!res.ok) throw new Error('Failed to load first aid data');
         const data = await res.json();
-        setCategories(data.categories || []);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
+        const loadedBundle = data.bundle || {};
+        setBundle(loadedBundle);
+
+        const categoryList = Object.keys(loadedBundle).map((id) => ({
+          id,
+          name: loadedBundle[id]?.title || id.replace(/-/g, ' ').toUpperCase(),
+        }));
+
+        setCategories(categoryList);
+        if (categoryList.length > 0) {
+          setActiveCategory(categoryList[0].id);
+        }
+      } catch (err) {
+        setError('Failed to load first aid data');
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-    fetchCategories();
+
+    fetchBundle();
   }, []);
 
-  // Fetch category details when selected
-  const handleCategoryClick = async (categoryId) => {
-    setSelectedCategory(categoryId);
-    setDetailsLoading(true);
-    setOpenDialog(true);
-    try {
-      const res = await fetch(`/api/firstaid/${categoryId}`);
-      if (!res.ok) throw new Error('Failed to fetch category details');
-      const data = await res.json();
-      setCategoryDetails(data);
-    } catch (error) {
-      console.error('Error fetching category details:', error);
-      setCategoryDetails(null);
-    } finally {
-      setDetailsLoading(false);
+  const getTextFromItem = (item) => {
+    if (typeof item === 'string') return item;
+    if (item && typeof item === 'object') {
+      return item.detail || item.title || item.description || String(item);
     }
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-    setCategoryDetails(null);
-    setSelectedCategory(null);
-  };
-
-  const categoryEmojis = {
-    'animal-bites': '🐕',
-    'burns': '🔥',
-    'chemical-splash': '⚠️',
-    'cuts-wounds': '🩹',
-    'heat-stroke': '☀️',
-    'machinery-injury': '⚙️',
-    'pesticide-exposure': '☠️',
-    'respiratory-distress': '💨',
+    return String(item);
   };
 
   if (loading) {
@@ -80,157 +57,275 @@ function FirstAid() {
     );
   }
 
+  const cardData = bundle && activeCategory ? bundle[activeCategory] : null;
+
   return (
-    <div style={{ padding: '20px' }}>
-      <h2 style={{ color: '#59775e', fontFamily: "'Afacad', sans-serif", marginBottom: '30px' }}>
-        First Aid Guide
-      </h2>
-
-      <Grid container spacing={3}>
-        {categories.map((category) => (
-          <Grid item xs={12} sm={6} md={4} key={category.id}>
-            <Card
-              onClick={() => handleCategoryClick(category.id)}
-              sx={{
-                backgroundColor: '#f7f3ee',
-                border: '2px solid #8f7c63',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: '0 8px 16px rgba(89, 119, 94, 0.15)',
-                  transform: 'translateY(-4px)',
-                  borderColor: '#59775e',
-                },
-              }}
-            >
-              <CardActionArea>
-                <CardContent sx={{ textAlign: 'center' }}>
-                  <Typography
-                    sx={{
-                      fontSize: '2.5rem',
-                      marginBottom: '10px',
-                    }}
-                  >
-                    {categoryEmojis[category.id] || '❓'}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: '1.2rem',
-                      fontFamily: "'Afacad', sans-serif",
-                      color: '#59775e',
-                      fontWeight: 600,
-                    }}
-                  >
-                    {category.name}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* Details Dialog */}
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        maxWidth="sm"
-        fullWidth
-        PaperProps={{
-          sx: {
-            fontFamily: "'Afacad', sans-serif",
-            borderRadius: '12px',
-            border: '2px solid #8f7c63',
-          },
+    <Box
+      sx={{
+        padding: '32px 20px',
+        backgroundColor: '#f7f3ee',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Typography
+        sx={{
+          fontSize: '16px',
+          fontWeight: 600,
+          color: '#8f7c63',
+          textTransform: 'uppercase',
+          letterSpacing: '0.08em',
+          marginBottom: '16px',
+          fontFamily: "'Afacad', sans-serif",
+          textAlign: 'center',
         }}
       >
-        <DialogTitle
+        First Aid Categories
+      </Typography>
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '12px',
+          marginBottom: '28px',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        {categories.map((cat) => (
+          <Button
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)}
+            variant="outlined"
+            sx={{
+              padding: '10px 24px',
+              border: '2px solid #8f7c63',
+              borderRadius: '999px',
+              fontSize: '18px',
+              fontFamily: "'Afacad', sans-serif",
+              color: activeCategory === cat.id ? '#fff' : '#59775e',
+              backgroundColor: activeCategory === cat.id ? '#ecaf9a' : '#f7f3ee',
+              fontWeight: activeCategory === cat.id ? 600 : 400,
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: activeCategory === cat.id ? '#ecaf9a' : '#f0ebe1',
+                borderColor: '#59775e',
+              },
+            }}
+          >
+            {cat.name}
+          </Button>
+        ))}
+      </Box>
+
+      {activeCategory && (
+        <Typography
           sx={{
-            color: '#59775e',
+            fontSize: '22px',
             fontWeight: 600,
-            fontSize: '1.35rem',
+            color: '#59775e',
+            textAlign: 'center',
+            marginBottom: '24px',
             fontFamily: "'Afacad', sans-serif",
-            borderBottom: '2px solid #8f7c63',
-            pb: 2,
+            width: '100%',
           }}
         >
-          {selectedCategory && categories.find((c) => c.id === selectedCategory)?.name}
-        </DialogTitle>
-        <DialogContent sx={{ mt: 2, color: '#59775e', fontFamily: "'Afacad', sans-serif" }}>
-          {detailsLoading ? (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
-              <CircularProgress sx={{ color: '#59775e' }} />
-            </Box>
-          ) : categoryDetails ? (
-            <Box>
-              {categoryDetails.description && (
-                <Typography sx={{ mb: 2, whiteSpace: 'pre-wrap', color: '#59775e' }}>
-                  {categoryDetails.description}
+          {categories.find((c) => c.id === activeCategory)?.name}
+        </Typography>
+      )}
+
+      {error && (
+        <Typography
+          sx={{
+            color: '#cc0000',
+            fontFamily: "'Afacad', sans-serif",
+            textAlign: 'center',
+            fontSize: '22px',
+          }}
+        >
+          {error}
+        </Typography>
+      )}
+
+      {cardData && (
+        <Box sx={{ maxWidth: '760px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Card
+            sx={{
+              border: '2px solid #8f7c63',
+              borderRadius: '16px',
+              backgroundColor: '#fff',
+              padding: '28px',
+              width: '100%',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+            }}
+          >
+            {cardData.title && (
+              <Typography
+                sx={{
+                  fontSize: '26px',
+                  fontWeight: 600,
+                  color: '#59775e',
+                  marginBottom: '20px',
+                  fontFamily: "'Afacad', sans-serif",
+                  textAlign: 'center',
+                }}
+              >
+                {cardData.title}
+              </Typography>
+            )}
+
+            {cardData.description && (
+              <Typography
+                sx={{
+                  fontSize: '20px',
+                  color: '#59775e',
+                  lineHeight: 1.8,
+                  fontFamily: "'Afacad', sans-serif",
+                  marginBottom: '24px',
+                  whiteSpace: 'pre-wrap',
+                  textAlign: 'center',
+                }}
+              >
+                {cardData.description}
+              </Typography>
+            )}
+
+            {Array.isArray(cardData.steps) && cardData.steps.length > 0 && (
+              <Box sx={{ marginBottom: '28px' }}>
+                <Typography
+                  sx={{
+                    fontSize: '22px',
+                    fontWeight: 600,
+                    color: '#59775e',
+                    marginBottom: '16px',
+                    fontFamily: "'Afacad', sans-serif",
+                    textAlign: 'center',
+                  }}
+                >
+                  Steps
                 </Typography>
-              )}
-
-              {categoryDetails.steps && (
-                <Box>
-                  <Typography sx={{ fontWeight: 600, mb: 1, color: '#59775e' }}>Steps:</Typography>
-                  <ol style={{ color: '#59775e' }}>
-                    {categoryDetails.steps.map((step, idx) => (
-                      <li key={idx} style={{ marginBottom: '8px' }}>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {cardData.steps.map((step, idx) => (
+                    <Box key={idx} sx={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                      <Box
+                        sx={{
+                          minWidth: '34px',
+                          height: '34px',
+                          borderRadius: '50%',
+                          backgroundColor: '#59775e',
+                          color: 'white',
+                          fontSize: '18px',
+                          fontWeight: 600,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          marginTop: '2px',
+                          fontFamily: "'Afacad', sans-serif",
+                        }}
+                      >
+                        {idx + 1}
+                      </Box>
+                      <Typography
+                        sx={{
+                          fontSize: '18px',
+                          color: '#59775e',
+                          lineHeight: 1.7,
+                          fontFamily: "'Afacad', sans-serif",
+                          textAlign: 'left',
+                        }}
+                      >
+                        {getTextFromItem(step)}
+                      </Typography>
+                    </Box>
+                  ))}
                 </Box>
-              )}
+              </Box>
+            )}
 
-              {categoryDetails.warnings && (
-                <Box sx={{ mt: 2, p: 1.5, backgroundColor: '#ffe6cc', borderRadius: '8px' }}>
-                  <Typography sx={{ fontWeight: 600, color: '#cc6600', mb: 1 }}>
-                    ⚠️ Warnings:
-                  </Typography>
-                  <ul style={{ color: '#cc6600', margin: 0 }}>
-                    {categoryDetails.warnings.map((warning, idx) => (
-                      <li key={idx} style={{ marginBottom: '6px' }}>
-                        {warning}
+            {Array.isArray(cardData.warnings) && cardData.warnings.length > 0 && (
+              <Box sx={{ marginBottom: '28px' }}>
+                <Typography
+                  sx={{
+                    fontSize: '22px',
+                    fontWeight: 600,
+                    color: '#59775e',
+                    marginBottom: '16px',
+                    fontFamily: "'Afacad', sans-serif",
+                    textAlign: 'center',
+                  }}
+                >
+                  Warnings
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: '#fff9e6',
+                    border: '2px solid #e6c96e',
+                    borderRadius: '10px',
+                    padding: '16px',
+                  }}
+                >
+                  <ul style={{ color: '#59775e', margin: 0, paddingLeft: '20px' }}>
+                    {cardData.warnings.map((warning, idx) => (
+                      <li
+                        key={idx}
+                        style={{
+                          marginBottom: '8px',
+                          fontSize: '18px',
+                          fontFamily: "'Afacad', sans-serif",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        {getTextFromItem(warning)}
                       </li>
                     ))}
                   </ul>
                 </Box>
-              )}
+              </Box>
+            )}
 
-              {categoryDetails.when_to_seek_help && (
-                <Box sx={{ mt: 2, p: 1.5, backgroundColor: '#ffcccc', borderRadius: '8px' }}>
-                  <Typography sx={{ fontWeight: 600, color: '#cc0000', mb: 1 }}>
-                    🚨 When to Seek Help:
-                  </Typography>
-                  <Typography sx={{ color: '#cc0000', whiteSpace: 'pre-wrap' }}>
-                    {categoryDetails.when_to_seek_help}
-                  </Typography>
-                </Box>
-              )}
-            </Box>
-          ) : (
-            <Typography sx={{ color: '#59775e' }}>
-              Unable to load details. Please try again.
-            </Typography>
-          )}
-        </DialogContent>
-        <DialogActions sx={{ p: 2, pt: 1 }}>
-          <Button
-            onClick={handleCloseDialog}
-            variant="contained"
-            sx={{
-              fontFamily: "'Afacad', sans-serif",
-              textTransform: 'none',
-              backgroundColor: '#59775e',
-              borderRadius: '8px',
-            }}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+            {cardData.when_to_seek_help && (
+              <Box
+                sx={{
+                  backgroundColor: '#ffcccc',
+                  border: '2px solid #cc0000',
+                  borderRadius: '10px',
+                  padding: '20px',
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: '22px',
+                    fontWeight: 600,
+                    color: '#cc0000',
+                    marginBottom: '12px',
+                    fontFamily: "'Afacad', sans-serif",
+                    textAlign: 'center',
+                  }}
+                >
+                  When to Seek Help
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: '18px',
+                    color: '#cc0000',
+                    whiteSpace: 'pre-wrap',
+                    fontFamily: "'Afacad', sans-serif",
+                    lineHeight: 1.7,
+                    textAlign: 'center',
+                  }}
+                >
+                  {cardData.when_to_seek_help}
+                </Typography>
+              </Box>
+            )}
+          </Card>
+        </Box>
+      )}
+    </Box>
   );
 }
 
