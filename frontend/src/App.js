@@ -18,6 +18,8 @@ function App() {
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
   const [farmerType, setFarmerType] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const navigate = useNavigate();
+  navigate('/launch');
 
   const farmTypeOptions = [
     { value: 'crop', label: 'Crop Farmer' },
@@ -67,15 +69,10 @@ function App() {
   };
 
   return (
-    // <Router>
     <div className="App">
       <nav className="navbar">
         <h1>FarmerHealth</h1>
       </nav>
-      {/* <Routes>
-        <Route path="/" element={<Launch />} />
-        <Route path="/main" element={
-        <> */}
       <ToggleButtonGroup
         color="primary"
         value={alignment}
@@ -315,11 +312,8 @@ function App() {
 </Box>
         </Box>
       </Drawer>
-      {/* </>
-        } />
-      </Routes> */}
+
     </div>
-    // </Router>
   );
 }
 
