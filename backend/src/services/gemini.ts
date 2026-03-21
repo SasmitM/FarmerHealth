@@ -36,7 +36,7 @@ Structure your response as follows:
 
 End with a 2–3 sentence summary of the most serious long-term risk this farmer faces overall, and why catching it early matters.
 
-Use plain language. No jargon. Never cut off mid-thought — always finish every section completely.`;
+Use plain language. No jargon. Always have complete sentences - never cut off mid-thought.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
