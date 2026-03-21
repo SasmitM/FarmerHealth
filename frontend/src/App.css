@@ -1,15 +1,15 @@
 .App {
   text-align: center;
   background-color: #f7f3ee;
-  min-height: 100vh;
 }
 
 .navbar {
   text-align: left;
   font-size: 30px;
   margin-left: 35px;
-  padding-top: 24px;
-  color: #1f3b4f;
+  margin-top: -30px;
+  color:
+    #59775e;
 }
 
 button {
@@ -22,19 +22,11 @@ button {
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
+}
+Stack {
+  font-size: large;
 }
 
 @keyframes App-logo-spin {

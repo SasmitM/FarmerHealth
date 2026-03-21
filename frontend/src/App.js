@@ -1,10 +1,16 @@
 import './App.css';
 import React from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
 
 function App() {
   const [alignment, setAlignment] = React.useState('risk');
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
@@ -72,16 +78,66 @@ function App() {
       {alignment === 'risk' && (
         <div className="risk-form">
           <h2>Risk Form</h2>
-  
+
         </div>
       )}
 
       {alignment === 'symptoms' && (
         <div className="symptoms-form">
           <h2>Symptoms Form</h2>
-    
+
         </div>
       )}
+
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          position: 'fixed',
+          right: 24,
+          bottom: 24,
+          zIndex: 1200,
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={() => setIsSidebarOpen(true)}
+          sx={{
+            fontFamily: "'Afacad', sans-serif",
+            textTransform: 'none',
+            backgroundColor: '#59775e',
+            fontSize: '1.25rem',
+            padding: '12px 22px',
+            borderRadius: '12px',
+          }}
+        >
+          FarmerBot 🧑‍🌾
+        </Button>
+      </Stack>
+
+      <Drawer
+        anchor="right"
+        open={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      >
+        <Box
+          sx={{
+            width: 340,
+            height: '100%',
+            backgroundColor: '#f3debf',
+            p: 3,
+            fontFamily: "'Afacad', sans-serif",
+          }}
+          role="presentation"
+        >
+          <Typography variant="h5" sx={{ color: '#1f3b4f', mb: 1 }}>
+            FarmerBot
+          </Typography>
+          <Typography sx={{ color: '#1f3b4f' }}>
+            Chat sidebar ready.
+          </Typography>
+        </Box>
+      </Drawer>
     </div>
   );
 }
