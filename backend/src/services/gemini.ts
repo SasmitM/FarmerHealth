@@ -34,15 +34,15 @@ Structure your response as follows:
 - Who is most vulnerable and when (age, season, task, duration)
 - One practical action the farmer can take to reduce long-term harm
 
-End with a 2–3 sentence summary of the most serious long-term risk this farmer faces overall, and why catching it early matters.
+Write 1-2 paragraph summary of the most serious long-term risk this farmer faces overall, and why catching it early matters.
 
-Use plain language. No jargon. Always have complete sentences - never cut off mid-thought.`;
+Use plain language. No jargon. Always COMPLETE YOUR SENTENCES - never cut off mid-thought.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: `${RISK_PROMPT}\n\n${userPrompt}`,
     config: {
-      maxOutputTokens: 1536,
+      maxOutputTokens: 2048,
     },
   });
 
