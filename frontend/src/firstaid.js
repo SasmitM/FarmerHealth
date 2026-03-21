@@ -24,7 +24,7 @@ function FirstAid() {
 
         const categoryList = Object.keys(loadedBundle).map((id) => ({
           id,
-          name: loadedBundle[id]?.title || id.replace(/-/g, ' ').toUpperCase(),
+          name: loadedBundle[id]?.name || id.replace(/-/g, ' ').toUpperCase(),
         }));
 
         setCategories(categoryList);
@@ -94,15 +94,15 @@ function FirstAid() {
       {cardData && (
         <Box className="firstaid-card-wrap">
           <Card className="firstaid-card">
-            {cardData.title && (
+            {cardData.name && (
               <Typography className="firstaid-card-title">
-                {cardData.title}
+                {cardData.name}
               </Typography>
             )}
 
-            {cardData.description && (
+            {cardData.overview && (
               <Typography className="firstaid-description">
-                {cardData.description}
+                {cardData.overview}
               </Typography>
             )}
 
