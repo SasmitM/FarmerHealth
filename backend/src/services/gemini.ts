@@ -19,20 +19,30 @@ export async function getRiskSummary(farmType: FarmType): Promise<string> {
 
   const context = farmContext[farmType] || farmType;
 
-  const userPrompt = `Generate a plain-language summary of the main health risks for a farmer who does ${context}. 
+  const userPrompt = `You are a rural health specialist writing for farmers with no medical background.
 
-Cover:
-- Specific hazards (e.g., pesticide exposure, dust, animal injuries, zoonotic diseases, machinery, chemicals)
-- Who is most at risk and when
-- Practical takeaway or reminder
+A farmer regularly does: ${context}
 
-Use simple language. No medical jargon. End with a complete, concluding sentence-do not cut of mid-thought.`;
+Write a detailed but plain-language health risk summary. For each hazard relevant to this type of farming, go beyond surface-level warnings — explain the biological chain of harm: what enters or damages the body, how it accumulates or injures over time, and what long-term conditions or disabilities this can lead to if ignored.
+
+Structure your response as follows:
+
+**Hazard name**
+- How exposure happens in this type of farming
+- What it does to the body over weeks, months, and years (not just immediate symptoms)
+- The chronic conditions, diseases, or permanent injuries it can cause (e.g., COPD, neuropathy, hearing loss, organ damage, cancer risk)
+- Who is most vulnerable and when (age, season, task, duration)
+- One practical action the farmer can take to reduce long-term harm
+
+End with a 2–3 sentence summary of the most serious long-term risk this farmer faces overall, and why catching it early matters.
+
+Use plain language. No jargon. Never cut off mid-thought — always finish every section completely.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: `${RISK_PROMPT}\n\n${userPrompt}`,
     config: {
-      maxOutputTokens: 2048,
+      maxOutputTokens: 1536,
     },
   });
 
