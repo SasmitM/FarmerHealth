@@ -1,5 +1,6 @@
 import { GoogleGenAI } from '@google/genai';
 import type { FarmType } from '../types/profile';
+import type { ChatMessage } from '../types/symptoms';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -80,4 +81,52 @@ Use plain language. No jargon. Always COMPLETE YOUR SENTENCES - never cut off mi
   }
 
   return ensureCompleteSentence(sanitizeSummary(text));
+}
+
+const SYMPTOM_SYSTEM_PROMPT = `You are a symptom checker for rural farmers. You understand farm work: pesticides, livestock, machinery, dust, chemicals, zoonotic diseases.
+
+Rules:
+- Ask follow-up questions about recent farm activities (spraying, animal contact, machinery use, chemical exposure).
+- Use plain language. No medical jargon.
+- When you have enough context, give: (1) a likely cause, (2) a clear action level.
+- Action levels: "monitor" (watch at home), "urgent_care", "er", "call_911".
+- For pesticide exposure, breathing trouble, severe injury, chest pain, or loss of consciousness → escalate appropriately.
+- Never diagnose. Always say "see a doctor" when unsure.
+- Keep responses concise (2-4 sentences) unless explaining an action.
+- If you give an action level, end your response with: [ACTION_LEVEL: monitor] or [ACTION_LEVEL: urgent_care] or [ACTION_LEVEL: er] or [ACTION_LEVEL: call_911]`;
+
+export async function symptomChat(messages: ChatMessage[]): Promise<string> {
+  if (messages.length === 0) {
+    throw new Error('At least one message required');
+  }
+
+  const contents = messages.map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }));
+
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents,
+    config: {
+      systemInstruction: SYMPTOM_SYSTEM_PROMPT,
+      maxOutputTokens: 1024,
+    },
+  });
+
+  const text = response.text;
+  if (!text) {
+    throw new Error('No text in Gemini response');
+  }
+
+  return text;
+}
+
+export function parseActionLevel(text: string): string | undefined {
+  const match = text.match(/\[ACTION_LEVEL:\s*(monitor|urgent_care|er|call_911)\]/i);
+  return match ? match[1].toLowerCase() : undefined;
+}
+
+export function stripActionLevelTag(text: string): string {
+  return text.replace(/\s*\[ACTION_LEVEL:\s*(monitor|urgent_care|er|call_911)\]\s*/gi, '').trim();
 }
