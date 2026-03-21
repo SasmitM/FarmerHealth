@@ -5,4 +5,4 @@ dist/
 .env
 .env.local
 *.log
-.DS_Store
+.DS_Storebackend/.env
