@@ -28,20 +28,60 @@ function App() {
             fontFamily: "'Afacad', sans-serif",
             color: '#1f3b4f',
             borderColor: '#8f7c63',
+            backgroundColor: '#f7f3ee',
             textTransform: 'none',
-          },
-          '& .Mui-selected': {
-            backgroundColor: '#ecaf9a',
-            color: '#1f3b4f',
-          },
-          '& .Mui-selected:hover': {
-            backgroundColor: '#d4956a',
+            fontSize: '1.35rem',
+            minHeight: 56,
+            minWidth: 150,
+            padding: '12px 28px',
           },
         }}
       >
-        <ToggleButton value="risk" sx={{ fontFamily: "'Afacad', sans-serif" }}>Risk</ToggleButton>
-        <ToggleButton value="symptoms" sx={{ fontFamily: "'Afacad', sans-serif" }}>Symptoms</ToggleButton>
+        <ToggleButton
+          value="risk"
+          sx={{
+            fontFamily: "'Afacad', sans-serif",
+            '&.Mui-selected': {
+              backgroundColor: '#ecaf9a',
+              color: '#1f3b4f',
+            },
+            '&.Mui-selected:hover': {
+              backgroundColor: '#d4956a',
+            },
+          }}
+        >
+          Risk
+        </ToggleButton>
+        <ToggleButton
+          value="symptoms"
+          sx={{
+            fontFamily: "'Afacad', sans-serif",
+            '&.Mui-selected': {
+              backgroundColor: '#ecaf9a',
+              color: '#1f3b4f',
+            },
+            '&.Mui-selected:hover': {
+              backgroundColor: '#d4956a',
+            },
+          }}
+        >
+          Symptoms
+        </ToggleButton>
       </ToggleButtonGroup>
+
+      {alignment === 'risk' && (
+        <div className="risk-form">
+          <h2>Risk Form</h2>
+  
+        </div>
+      )}
+
+      {alignment === 'symptoms' && (
+        <div className="symptoms-form">
+          <h2>Symptoms Form</h2>
+    
+        </div>
+      )}
     </div>
   );
 }
