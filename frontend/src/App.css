@@ -77,8 +77,8 @@ button {
   border: 1px solid #8f7c63;
   border-radius: 12px;
   background: #fff9f2;
-  min-height: 180px;
-  max-height: 260px;
+  min-height: 350px;
+  max-height: 450px;
   overflow-y: auto;
   padding: 12px;
   display: flex;
