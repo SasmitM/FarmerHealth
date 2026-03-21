@@ -31,12 +31,16 @@ function Launch() {
   };
 
   return (
-    <div style={{ height: '200vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '60px 40px 40px' }}>
+    <div style={{ height: '200vh', backgroundColor: '#f7f3ee'  }}>
 
       {/* Title */}
-      <div>
-        <h1 style={{ fontFamily: "'Afacad', sans-serif", color: '#59775e', fontSize: '3.5rem', margin: 0, lineHeight: 1.1 }}>
-          Farmer<br />Health
+      <div style={{ position: 'fixed',
+      top: '50%',
+      left: '40px',
+      transform: 'translateY(-50%)',
+      textAlign: 'left' }}>
+        <h1 style={{ fontFamily: "'Afacad', sans-serif", color: '#59775e', fontSize: '9.0rem', margin: 0, lineHeight: 1.1 }}>
+          FarmerHealth
         </h1>
         <p style={{ fontFamily: "'Afacad', sans-serif", color: '#8f7c63', fontSize: '1.1rem', marginTop: '16px', maxWidth: '360px', lineHeight: 1.6 }}>
           Health information built for rural farmers. Understand your risks, check your symptoms, and know when to act.
