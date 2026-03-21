@@ -3,6 +3,34 @@ import type { FarmType } from '../types/profile';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+function ensureCompleteSentence(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed) return trimmed;
+  if (/[.!?]$/.test(trimmed)) return trimmed;
+
+  const lastEnd = Math.max(
+    trimmed.lastIndexOf('.'),
+    trimmed.lastIndexOf('!'),
+    trimmed.lastIndexOf('?')
+  );
+
+  if (lastEnd >= 0) {
+    const result = trimmed.slice(0, lastEnd + 1).trim();
+    if (result.length >= 50) return result;
+  }
+
+  return trimmed;
+}
+
+function sanitizeSummary(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '$1') // **bold** -> bold
+    .replace(/\n-{2,}\n/g, '\n') // --- blocks -> single newline
+    .replace(/^\*+\s+/gm, '') // * bullets at line start -> remove
+    .replace(/\n{2,}/g, '\n\n') // Max 2 consecutive newlines
+    .trim();
+}
+
 const RISK_PROMPT = `You are a health educator for rural farmers. Use plain language that a farmer with limited medical knowledge can understand. Be specific about occupational hazards tied to farm work. Keep the summary to 2-3 short paragraphs.`;
 
 export async function getRiskSummary(farmType: FarmType): Promise<string> {
@@ -51,5 +79,5 @@ Use plain language. No jargon. Always COMPLETE YOUR SENTENCES - never cut off mi
     throw new Error('No text in Gemini response');
   }
 
-  return text;
+  return ensureCompleteSentence(sanitizeSummary(text));
 }
