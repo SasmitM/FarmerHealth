@@ -1,6 +1,6 @@
 # FarmerHealth (FarmAid Health)
 
-Health tools for rural farmers — risk education, symptom checker, ER finder, and first aid guide.
+Health tools for rural farmers — risk education, symptom checker, and first aid guide.
 
 ## Project Structure
 
@@ -16,7 +16,6 @@ FarmerHealth/
 │   │   └── routes/
 │   │       ├── profile.ts
 │   │       ├── symptoms.ts
-│   │       ├── emergency.ts
 │   │       └── firstaid.ts
 │   └── package.json
 ├── package.json       # Root scripts
@@ -30,7 +29,6 @@ FarmerHealth/
 | POST | `/api/profile/risk-summary` | Farm type → health risk summary |
 | POST | `/api/symptoms/session` | Create symptom checker session |
 | POST | `/api/symptoms/session/:id/message` | Chat message in session |
-| GET | `/api/emergency/er?lat=&lng=` | Nearest ER finder |
 | GET | `/api/firstaid/categories` | First aid categories list |
 | GET | `/api/firstaid/:category` | Category content |
 | GET | `/api/firstaid/bundle` | All first aid content (offline) |
