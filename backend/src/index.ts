@@ -1,3 +1,4 @@
+import './loadEnv';
 import express from 'express';
 import cors from 'cors';
 import profileRouter from './routes/profile';
@@ -6,7 +7,7 @@ import emergencyRouter from './routes/emergency';
 import firstaidRouter from './routes/firstaid';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.use(cors());
 app.use(express.json());
