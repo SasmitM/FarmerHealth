@@ -21,9 +21,10 @@ function App() {
         exclusive
         onChange={handleChange}
         aria-label="Platform"
+        sx={{ '& button': { fontFamily: "'Afacad', sans-serif" } }}
       >
-        <ToggleButton value="risk">Risk</ToggleButton>
-        <ToggleButton value="symptoms">Symptoms</ToggleButton>
+        <ToggleButton value="risk" sx={{ fontFamily: "'Afacad', sans-serif" }}>Risk</ToggleButton>
+        <ToggleButton value="symptoms" sx={{ fontFamily: "'Afacad', sans-serif" }}>Symptoms</ToggleButton>
       </ToggleButtonGroup>
     </div>
   );
