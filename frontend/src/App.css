@@ -1,16 +1,31 @@
 .App {
   text-align: center;
   background-color: #f7f3ee;
+  min-height: 100vh;
 }
 
-.navbar {
+/* .navbar {
   text-align: left;
   font-size: 30px;
   margin-left: 35px;
   margin-top: -30px;
   color:
     #59775e;
+  background-color: #f7f3ee;
+} */
+
+.navbar {
+  text-align: left;
+  background-color: #f7f3ee;
+  padding: 20px 35px 0px 35px;
 }
+
+.navbar h1 {
+  font-size: 30px;
+  color: #59775e;
+  margin: 0;
+}
+
 
 button {
   font-family: 'Afacad', sans-serif;
@@ -37,4 +52,14 @@ Stack {
   to {
     transform: rotate(360deg);
   }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f7f3ee;
+}
+
+* {
+  box-sizing: border-box;
 }
