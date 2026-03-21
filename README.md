@@ -26,6 +26,7 @@ FarmerHealth/
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET | `/api/health` | Health check (returns `{ status: "ok" }`) |
 | POST | `/api/profile/risk-summary` | Farm type → health risk summary |
 | POST | `/api/symptoms/session` | Create symptom checker session |
 | POST | `/api/symptoms/session/:id/message` | Chat message in session |

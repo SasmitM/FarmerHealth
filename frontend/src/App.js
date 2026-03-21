@@ -2,6 +2,10 @@ import './App.css';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import Drawer from '@mui/material/Drawer';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,15 +13,20 @@ import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Launch from './launch.js';
 
 function App() {
+  const chatWindowRef = React.useRef(null);
   const [alignment, setAlignment] = React.useState('risk');
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
   const [farmerType, setFarmerType] = React.useState('');
   const [message, setMessage] = React.useState('');
+  const [riskSummaryOpen, setRiskSummaryOpen] = React.useState(false);
+  const [riskSummary, setRiskSummary] = React.useState('');
+  const [isRiskLoading, setIsRiskLoading] = React.useState(false);
   const [symptomSessionId, setSymptomSessionId] = React.useState(null);
   const [symptomMessage, setSymptomMessage] = React.useState('');
   const [symptomHistory, setSymptomHistory] = React.useState([
@@ -60,6 +69,32 @@ function App() {
     setFarmerTypeAnchor(null);
   };
 
+  const handleRiskSubmit = async () => {
+    if (!farmerType) {
+      alert('Please select a farm type');
+      return;
+    }
+
+    try {
+      setIsRiskLoading(true);
+      const res = await fetch('/api/profile/risk-summary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ farm_type: farmerType }),
+      });
+
+      if (!res.ok) throw new Error('Failed to get risk summary');
+      const data = await res.json();
+      setRiskSummary(data.summary);
+      setRiskSummaryOpen(true);
+    } catch (error) {
+      console.error('Risk summary error:', error);
+      alert('Failed to generate risk summary. Please try again.');
+    } finally {
+      setIsRiskLoading(false);
+    }
+  };
+
   const symptomContextChips = [
     'spraying',
     'animal contact',
@@ -72,6 +107,12 @@ function App() {
   const handleAddSymptomContext = (contextText) => {
     setSymptomMessage((prev) => (prev ? `${prev}, ${contextText}` : contextText));
   };
+
+  React.useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [symptomHistory]);
 
   const handleSymptomSend = async () => {
     const trimmedMessage = symptomMessage.trim();
@@ -294,8 +335,14 @@ function App() {
                       ))}
                     </Menu>
 
-                    <Button variant="contained" type="button" sx={submitButtonSx}>
-                      Submit
+                    <Button
+                      variant="contained"
+                      type="button"
+                      sx={submitButtonSx}
+                      onClick={handleRiskSubmit}
+                      disabled={isRiskLoading}
+                    >
+                      {isRiskLoading ? 'Loading...' : 'Submit'}
                     </Button>
 
                   </div>
@@ -338,7 +385,7 @@ function App() {
                     )}
 
                     <label>Conversation</label>
-                    <div className="symptom-chat-window">
+                    <div className="symptom-chat-window" ref={chatWindowRef}>
                       {symptomHistory.map((entry, index) => (
                         <div
                           key={`${entry.role}-${index}`}
@@ -499,6 +546,56 @@ function App() {
             </Drawer>
           </>} />
         </Routes>
+
+        <Dialog
+          open={riskSummaryOpen}
+          onClose={() => setRiskSummaryOpen(false)}
+          maxWidth="sm"
+          fullWidth
+          PaperProps={{
+            sx: {
+              fontFamily: "'Afacad', sans-serif",
+              borderRadius: '12px',
+              border: '2px solid #8f7c63',
+            }
+          }}
+        >
+          <DialogTitle sx={{
+            color: '#59775e',
+            fontWeight: 600,
+            fontSize: '1.35rem',
+            fontFamily: "'Afacad', sans-serif",
+            borderBottom: '2px solid #8f7c63',
+            pb: 2
+          }}>
+            Risk Summary
+          </DialogTitle>
+          <DialogContent sx={{ mt: 2, color: '#59775e', fontFamily: "'Afacad', sans-serif" }}>
+            {isRiskLoading ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
+                <CircularProgress sx={{ color: '#59775e' }} />
+              </Box>
+            ) : (
+              <Typography sx={{ whiteSpace: 'pre-wrap', color: '#59775e', fontFamily: "'Afacad', sans-serif", fontSize: '1.2rem', lineHeight: 1.6 }}>
+                {riskSummary}
+              </Typography>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ p: 2, pt: 1 }}>
+            <Button
+              onClick={() => setRiskSummaryOpen(false)}
+              variant="contained"
+              sx={{
+                fontFamily: "'Afacad', sans-serif",
+                textTransform: 'none',
+                backgroundColor: '#59775e',
+                borderRadius: '8px',
+              }}
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </Router>
   );
