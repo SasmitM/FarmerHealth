@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Launch from './launch.js';
 
 function App() {
   const [alignment, setAlignment] = React.useState('risk');
@@ -65,10 +67,15 @@ function App() {
   };
 
   return (
+    <Router>
     <div className="App">
       <nav className="navbar">
         <h1>FarmerHealth</h1>
       </nav>
+      <Routes>
+        <Route path="/" element={<Launch />} />
+        <Route path="/main" element={
+        <>
       <ToggleButtonGroup
         color="primary"
         value={alignment}
@@ -308,7 +315,11 @@ function App() {
 </Box>
         </Box>
       </Drawer>
+      </>
+        } />
+      </Routes>
     </div>
+    </Router>
   );
 }
 
