@@ -257,7 +257,7 @@ function AppContent() {
         border: 'none',
         borderRadius: '10px',
         padding: '10px 20px',
-        fontSize: '5rem',
+        fontSize: '1.5rem',
         cursor: 'pointer',
       }}
     >
@@ -557,95 +557,9 @@ function AppContent() {
               zIndex: 1200,
             }}
           >
-            <Button
-              variant="contained"
-              onClick={() => setIsSidebarOpen(true)}
-              sx={{
-                fontFamily: "'Afacad', sans-serif",
-                textTransform: 'none',
-                backgroundColor: '#59775e',
-                fontSize: '1.25rem',
-                padding: '12px 22px',
-                borderRadius: '12px',
-              }}
-            >
-              FarmerBot 🧑‍🌾
-            </Button>
+            
           </Stack>
 
-          <Drawer
-            anchor="right"
-            open={isSidebarOpen}
-            onClose={() => setIsSidebarOpen(false)}
-          >
-            <Box
-              sx={{
-                width: 340,
-                height: '100%',
-                backgroundColor: '#f3debf',
-                p: 3,
-                fontFamily: "'Afacad', sans-serif",
-                position: 'relative'
-              }}
-              role="presentation"
-            >
-              <Typography variant="h5" sx={{ color: '#1f3b4f', mb: 1 }}>
-                FarmerBot
-              </Typography>
-              <Typography sx={{ color: '#1f3b4f' }}>
-                Chat sidebar ready.
-              </Typography>
-              <Box sx={{
-                display: 'flex',
-                gap: 1,
-                alignItems: 'flex-end',
-                mt: 2,
-                position: 'absolute',
-                bottom: 24,
-                left: 24,
-                right: 24,
-              }}>
-                <textarea
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                  placeholder="Type your message..."
-                  rows={2}
-                  style={{
-                    flex: 1,
-                    resize: 'none',
-                    border: '1px solid #c4b49a',
-                    borderRadius: '10px',
-                    padding: '10px 12px',
-                    fontFamily: "'Afacad', sans-serif",
-                    fontSize: '14px',
-                    color: '#1f3b4f',
-                    backgroundColor: '#fff',
-                    outline: 'none',
-                  }}
-                />
-                <Button
-                  onClick={handleSend}
-                  variant="contained"
-                  sx={{
-                    backgroundColor: '#59775e',
-                    fontFamily: "'Afacad', sans-serif",
-                    textTransform: 'none',
-                    borderRadius: '10px',
-                    height: '44px',
-                    minWidth: '64px',
-                  }}
-                >
-                  Send
-                </Button>
-              </Box>
-            </Box>
-          </Drawer>
         </>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
