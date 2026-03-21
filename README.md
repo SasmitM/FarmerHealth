@@ -46,11 +46,11 @@ npm run dev
 ```
 
 - **Frontend:** http://localhost:3000  
-- **Backend:** http://localhost:5000  
+- **Backend:** http://localhost:5001  
 
 Or run separately:
 
 ```bash
 npm run dev:frontend   # React on :3000
-npm run dev:backend   # Express on :5000
+npm run dev:backend   # Express on :5001
 ```

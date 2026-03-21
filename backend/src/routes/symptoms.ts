@@ -11,7 +11,7 @@ router.post('/session', (req, res) => {
 
 // POST /api/symptoms/session/:id/message
 router.post('/session/:id/message', (req, res) => {
-  // TODO: Handle chat message, call Claude for symptom analysis
+  // TODO: Handle chat message, call Gemini for symptom analysis
   const { id } = req.params;
   const { message } = req.body || {};
   res.json({
