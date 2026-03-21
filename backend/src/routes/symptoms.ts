@@ -3,7 +3,7 @@ import {
   symptomChat,
   parseActionLevel,
   stripActionLevelTag,
-} from '../services/gemini';
+} from '../services/openai';
 import type { ChatMessage } from '../types/symptoms';
 
 const router = Router();
