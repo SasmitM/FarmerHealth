@@ -1,4 +1,5 @@
 import React from 'react';
+import './resources.css';
 
 function Resources() {
   const resources = [
@@ -30,33 +31,25 @@ function Resources() {
   ];
 
   return (
-    <div style={{ padding: '32px 20px', maxWidth: '900px', margin: '0 auto' }}>
-      <h1 style={{ color: '#59775e', fontFamily: "'Afacad', sans-serif", marginBottom: '20px' }}>
+    <div className="resources-page">
+      <h1 className="resources-title">
         Resources
       </h1>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      <div className="resources-list">
         {resources.map((resource) => (
-          <div
-            key={resource.title}
-            style={{
-              border: '2px solid #8f7c63',
-              borderRadius: '12px',
-              backgroundColor: '#f7f3ee',
-              padding: '16px',
-            }}
-          >
-            <h2 style={{ margin: 0, color: '#59775e', fontFamily: "'Afacad', sans-serif", fontSize: '1.2rem' }}>
+          <div key={resource.title} className="resources-card">
+            <h2 className="resources-card-title">
               {resource.title}
             </h2>
-            <p style={{ margin: '8px 0 10px', color: '#5a5146', fontFamily: "'Afacad', sans-serif", fontSize: '1.05rem' }}>
+            <p className="resources-card-description">
               {resource.description}
             </p>
             <a
               href={resource.link}
               target="_blank"
               rel="noreferrer"
-              style={{ color: '#59775e', fontFamily: "'Afacad', sans-serif", fontWeight: 600 }}
+              className="resources-link"
             >
               {resource.link}
             </a>
@@ -64,22 +57,14 @@ function Resources() {
         ))}
       </div>
 
-      <div
-        style={{
-          marginTop: '20px',
-          border: '2px solid #8f7c63',
-          borderRadius: '12px',
-          backgroundColor: '#fff7ef',
-          padding: '16px',
-        }}
-      >
-        <h2 style={{ margin: 0, color: '#59775e', fontFamily: "'Afacad', sans-serif", fontSize: '1.2rem' }}>
+      <div className="resources-crisis-card">
+        <h2 className="resources-card-title">
           Crisis Support
         </h2>
-        <p style={{ margin: '10px 0 6px', color: '#5a5146', fontFamily: "'Afacad', sans-serif", fontSize: '1.05rem' }}>
+        <p className="resources-crisis-line resources-crisis-line-first">
           <strong>Farm Crisis Hotline:</strong> 1-800-FARM-AID
         </p>
-        <p style={{ margin: 0, color: '#5a5146', fontFamily: "'Afacad', sans-serif", fontSize: '1.05rem' }}>
+        <p className="resources-crisis-line">
           <strong>Crisis Text Line:</strong> Text HOME to 741741
         </p>
       </div>

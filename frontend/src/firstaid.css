@@ -1,0 +1,211 @@
+.firstaid-page {
+    padding: 32px 20px;
+    background-color: #f7f3ee;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.firstaid-loading {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.firstaid-spinner {
+    color: #59775e !important;
+}
+
+.firstaid-eyebrow {
+    font-size: 16px;
+    font-weight: 600;
+    color: #8f7c63;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: center;
+}
+
+.firstaid-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+    justify-content: center;
+    width: 100%;
+}
+
+.firstaid-chip {
+    padding: 10px 24px !important;
+    border: 2px solid #8f7c63 !important;
+    border-radius: 999px !important;
+    font-size: 18px !important;
+    font-family: 'Afacad', sans-serif !important;
+    color: #59775e !important;
+    background-color: #f7f3ee !important;
+    font-weight: 400 !important;
+    text-transform: none !important;
+}
+
+.firstaid-chip:hover {
+    background-color: #f0ebe1 !important;
+    border-color: #59775e !important;
+}
+
+.firstaid-chip-active {
+    color: #fff !important;
+    background-color: #ecaf9a !important;
+    font-weight: 600 !important;
+}
+
+.firstaid-chip-active:hover {
+    background-color: #ecaf9a !important;
+}
+
+.firstaid-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #59775e;
+    text-align: center;
+    margin-bottom: 24px;
+    font-family: 'Afacad', sans-serif !important;
+    width: 100%;
+}
+
+.firstaid-error {
+    color: #cc0000;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: center;
+    font-size: 22px;
+}
+
+.firstaid-card-wrap {
+    max-width: 760px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.firstaid-card {
+    border: 2px solid #8f7c63 !important;
+    border-radius: 16px !important;
+    background-color: #fff !important;
+    padding: 28px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.firstaid-card-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #59775e;
+    margin-bottom: 20px;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: center;
+}
+
+.firstaid-description {
+    font-size: 20px;
+    color: #59775e;
+    line-height: 1.8;
+    font-family: 'Afacad', sans-serif !important;
+    margin-bottom: 24px;
+    white-space: pre-wrap;
+    text-align: center;
+}
+
+.firstaid-section {
+    margin-bottom: 28px;
+}
+
+.firstaid-section-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #59775e;
+    margin-bottom: 16px;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: center;
+}
+
+.firstaid-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.firstaid-step-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.firstaid-step-badge {
+    min-width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #59775e;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-family: 'Afacad', sans-serif;
+}
+
+.firstaid-step-text {
+    font-size: 18px;
+    color: #59775e;
+    line-height: 1.7;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: left;
+}
+
+.firstaid-warning-box {
+    background-color: #fff9e6;
+    border: 2px solid #e6c96e;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.firstaid-warning-list {
+    color: #59775e;
+    margin: 0;
+    padding-left: 20px;
+}
+
+.firstaid-warning-item {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-family: 'Afacad', sans-serif;
+    line-height: 1.6;
+}
+
+.firstaid-help-box {
+    background-color: #ffcccc;
+    border: 2px solid #cc0000;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.firstaid-help-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #cc0000;
+    margin-bottom: 12px;
+    font-family: 'Afacad', sans-serif !important;
+    text-align: center;
+}
+
+.firstaid-help-text {
+    font-size: 18px;
+    color: #cc0000;
+    white-space: pre-wrap;
+    font-family: 'Afacad', sans-serif !important;
+    line-height: 1.7;
+    text-align: center;
+}

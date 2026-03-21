@@ -1,0 +1,63 @@
+.resources-page {
+    padding: 32px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.resources-title {
+    color: #59775e;
+    font-family: 'Afacad', sans-serif;
+    margin-bottom: 20px;
+}
+
+.resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.resources-card {
+    border: 2px solid #8f7c63;
+    border-radius: 12px;
+    background-color: #f7f3ee;
+    padding: 16px;
+}
+
+.resources-card-title {
+    margin: 0;
+    color: #59775e;
+    font-family: 'Afacad', sans-serif;
+    font-size: 1.2rem;
+}
+
+.resources-card-description {
+    margin: 8px 0 10px;
+    color: #5a5146;
+    font-family: 'Afacad', sans-serif;
+    font-size: 1.05rem;
+}
+
+.resources-link {
+    color: #59775e;
+    font-family: 'Afacad', sans-serif;
+    font-weight: 600;
+}
+
+.resources-crisis-card {
+    margin-top: 20px;
+    border: 2px solid #8f7c63;
+    border-radius: 12px;
+    background-color: #fff7ef;
+    padding: 16px;
+}
+
+.resources-crisis-line {
+    margin: 0;
+    color: #5a5146;
+    font-family: 'Afacad', sans-serif;
+    font-size: 1.05rem;
+}
+
+.resources-crisis-line-first {
+    margin: 10px 0 6px;
+}
