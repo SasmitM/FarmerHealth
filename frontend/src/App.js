@@ -3,6 +3,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -11,11 +13,48 @@ import Typography from '@mui/material/Typography';
 function App() {
   const [alignment, setAlignment] = React.useState('risk');
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+  const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
+  const [farmerType, setFarmerType] = React.useState('');
+
+  const farmTypeOptions = [
+    { value: 'crop', label: 'Crop Farmer' },
+    { value: 'livestock', label: 'Livestock Farmer' },
+    { value: 'mixed', label: 'Mixed Farmer' },
+    { value: 'poultry', label: 'Poultry Farmer' },
+    { value: 'dairy', label: 'Dairy Farmer' },
+    { value: 'aquaculture', label: 'Aquaculture Farmer' },
+    { value: 'greenhouse', label: 'Greenhouse / Nursery' },
+    { value: 'orchard', label: 'Orchard / Vineyard' },
+  ];
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
+  };
+
+  const handleFarmerTypeOpen = (event) => {
+    setFarmerTypeAnchor(event.currentTarget);
+  };
+
+  const handleFarmerTypeClose = () => {
+    setFarmerTypeAnchor(null);
+  };
+
+  const handleFarmerTypeSelect = (value) => {
+    setFarmerType(value);
+    setFarmerTypeAnchor(null);
+  };
+
+  const submitButtonSx = {
+    fontFamily: "'Afacad', sans-serif",
+    textTransform: 'none',
+    backgroundColor: '#59775e',
+    fontSize: '1.1rem',
+    padding: '10px 18px',
+    borderRadius: '10px',
+    alignSelf: 'flex-start',
+    mt: 1,
   };
 
   return (
@@ -78,14 +117,89 @@ function App() {
       {alignment === 'risk' && (
         <div className="risk-form">
           <h2>Risk Form</h2>
+          <div className="form-card">
+            <div className="card-top">Crop + Region Info</div>
+            <div className="card-body">
+              <label>Type of Farmer</label>
+              <Button
+                variant="outlined"
+                onClick={handleFarmerTypeOpen}
+                sx={{
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  borderColor: '#8f7c63',
+                  color: '#1f3b4f',
+                  backgroundColor: '#fff9f2',
+                  textTransform: 'none',
+                  fontFamily: "'Afacad', sans-serif",
+                  fontSize: '1rem',
+                  px: 1.5,
+                  py: 1,
+                }}
+              >
+                {farmTypeOptions.find((option) => option.value === farmerType)?.label || 'Type of Farmer'} ▼
+              </Button>
+              <Menu
+                anchorEl={farmerTypeAnchor}
+                open={Boolean(farmerTypeAnchor)}
+                onClose={handleFarmerTypeClose}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      fontFamily: "'Afacad', sans-serif",
+                      backgroundColor: '#fff9f2',
+                      color: '#1f3b4f',
+                      border: '1px solid #8f7c63',
+                      boxShadow: 'none',
+                      mt: 0.5,
+                    },
+                  },
+                }}
+              >
+                {farmTypeOptions.map((option) => (
+                  <MenuItem
+                    key={option.value}
+                    onClick={() => handleFarmerTypeSelect(option.value)}
+                    sx={{
+                      fontFamily: "'Afacad', sans-serif",
+                      color: '#1f3b4f',
+                      '&:hover': { backgroundColor: '#f3debf' },
+                    }}
+                  >
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Menu>
 
+              <Button variant="contained" type="button" sx={submitButtonSx}>
+                Submit
+              </Button>
+
+            </div>
+          </div>
         </div>
       )}
 
       {alignment === 'symptoms' && (
         <div className="symptoms-form">
           <h2>Symptoms Form</h2>
+          <div className="form-card">
+            <div className="card-top">Symptom Summary</div>
+            <div className="card-body">
+              <label htmlFor="symptom-name">Symptom</label>
+              <input id="symptom-name" type="text" placeholder="e.g., yellow leaves" />
 
+              <label htmlFor="symptom-days">Duration (days)</label>
+              <input id="symptom-days" type="number" placeholder="e.g., 4" />
+
+              <label htmlFor="symptom-detail">Details</label>
+              <textarea id="symptom-detail" rows="4" placeholder="Describe what you see" />
+
+              <Button variant="contained" type="button" sx={submitButtonSx}>
+                Submit
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 

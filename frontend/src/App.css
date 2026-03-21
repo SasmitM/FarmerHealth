@@ -1,6 +1,8 @@
 .App {
   text-align: center;
   background-color: #f7f3ee;
+  min-height: 100vh;
+  padding-bottom: 110px;
 }
 
 .navbar {
@@ -16,6 +18,57 @@ button {
   font-family: 'Afacad', sans-serif;
 }
 
+.risk-form,
+.symptoms-form {
+  max-width: 980px;
+  margin: 28px auto 0;
+  text-align: left;
+}
+
+.risk-form h2,
+.symptoms-form h2 {
+  color: #1f3b4f;
+  margin: 0 0 14px;
+}
+
+.form-card {
+  border: 2px solid #8f7c63;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f7f3ee;
+}
+
+.card-top {
+  border-bottom: 2px solid #8f7c63;
+  padding: 14px 18px;
+  font-size: 1.15rem;
+  color: #1f3b4f;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 18px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-body label {
+  color: #1f3b4f;
+  font-weight: 600;
+}
+
+.card-body input,
+.card-body textarea {
+  border: 1px solid #8f7c63;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: 'Afacad', sans-serif;
+  font-size: 1rem;
+  background: #fff9f2;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -25,6 +78,7 @@ button {
 .App-link {
   color: #61dafb;
 }
+
 Stack {
   font-size: large;
 }
