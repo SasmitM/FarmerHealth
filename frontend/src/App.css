@@ -2,21 +2,8 @@
   text-align: center;
   background-color: #f7f3ee;
   min-height: 100vh;
-<<<<<<< HEAD
   padding-bottom: 110px;
-=======
->>>>>>> af0da2aee74a2d57b40704c501297c59b1c0a939
 }
-
-/* .navbar {
-  text-align: left;
-  font-size: 30px;
-  margin-left: 35px;
-  margin-top: -30px;
-  color:
-    #59775e;
-  background-color: #f7f3ee;
-} */
 
 .navbar {
   text-align: left;
@@ -25,7 +12,7 @@
 }
 
 .navbar h1 {
-  font-size: 30px;
+  font-size: 55px;
   color: #59775e;
   margin: 0;
 }
