@@ -287,6 +287,14 @@ function AppContent() {
                 border: 0,
                 borderRadius: 0,
               },
+              '& .MuiToggleButtonGroup-firstButton': {
+                borderTopLeftRadius: '12px',
+                borderBottomLeftRadius: '12px',
+              },
+              '& .MuiToggleButtonGroup-lastButton': {
+                borderTopRightRadius: '12px',
+                borderBottomRightRadius: '12px',
+              },
               '& .MuiToggleButtonGroup-grouped:not(:last-of-type)': {
                 borderRight: '2px solid #8f7c63',
               },
