@@ -20,7 +20,21 @@ function Launch() {
 
   return (
     <div style={{ height: '200vh', paddingTop: '50px' }}>
-      <h1>New Page</h1>
+    <div style={{
+      position: 'fixed',
+      left: '40px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+    }}>
+    </div>
+    <h1 style={{
+        fontFamily: "'Afacad', sans-serif",
+        color: '#59775e',
+        fontSize: '3rem',
+        margin: 0,
+    }}>
+    New Page
+    </h1>
       <p>Scroll down to continue to the app...</p>
     </div>
   );
