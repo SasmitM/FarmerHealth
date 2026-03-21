@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Launch from './launch.js';
+import FirstAid from './firstaid.js';
 
 function App() {
   const chatWindowRef = React.useRef(null);
@@ -200,6 +201,7 @@ function App() {
         </nav>
         <Routes>
           <Route path="/" element={<Launch />} />
+          <Route path="/firstaid" element={<FirstAid />} />
           <Route path="/main" element={<>
             <ToggleButtonGroup
               color="primary"

@@ -36,7 +36,9 @@ function Launch() {
     New Page
     </h1>
       <p>Scroll down to continue to the app...</p>
+      <button onClick={() => navigate('/firstaid')}>First Aid</button>
     </div>
+    
   );
 }
 
