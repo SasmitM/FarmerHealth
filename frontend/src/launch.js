@@ -4,18 +4,25 @@ import { useNavigate } from 'react-router-dom';
 function Launch() {
   const navigate = useNavigate();
   const prevScrollRef = React.useRef(0);
+  const isNavigatingRef = React.useRef(false);
 
   React.useEffect(() => {
     document.documentElement.style.scrollBehavior = 'smooth';
 
     const handleScroll = () => {
+      if (isNavigatingRef.current) return;
+
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollDirection = scrollTop > prevScrollRef.current ? 'down' : 'up';
       prevScrollRef.current = scrollTop;
 
       if (scrollDirection === 'down' && scrollTop > 100) {
-        navigate('/main');
+        isNavigatingRef.current = true;
+        navigate('/main?tab=risk');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          isNavigatingRef.current = false;
+        }, 300);
       }
     };
 

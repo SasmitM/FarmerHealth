@@ -14,14 +14,20 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Launch from './launch.js';
 import FirstAid from './firstaid.js';
+import useScrollAnimation from './useScrollAnimation';
 
 function AppContent() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const chatWindowRef = React.useRef(null);
+  
+  // Enable scroll animations
+  useScrollAnimation();
+  
   const [alignment, setAlignment] = React.useState('risk');
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
@@ -53,9 +59,19 @@ function AppContent() {
     { value: 'orchard', label: 'Orchard / Vineyard' },
   ];
 
+  // Set alignment based on URL parameters
+  React.useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab && ['risk', 'symptoms', 'firstaid'].includes(tab)) {
+      setAlignment(tab);
+    }
+  }, [searchParams]);
+
   const handleChange = (event, newAlignment) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
+      // Update URL with the selected tab
+      navigate(`/main?tab=${newAlignment}`);
     }
   };
 
@@ -300,6 +316,27 @@ function AppContent() {
             >
               Symptoms
             </ToggleButton>
+            <ToggleButton
+              value="firstaid"
+              sx={{
+                fontFamily: "'Afacad', sans-serif",
+                '&.Mui-selected': {
+                  backgroundColor: '#ecaf9a',
+                  color: '#59775e',
+                },
+                '&.Mui-selected:hover': {
+                  backgroundColor: '#ecaf9a',
+                },
+                '&.Mui-selected.Mui-focusVisible': {
+                  backgroundColor: '#ecaf9a',
+                },
+                '&.Mui-selected:active': {
+                  backgroundColor: '#ecaf9a',
+                },
+              }}
+            >
+              First Aid
+            </ToggleButton>
           </ToggleButtonGroup>
 
           {alignment === 'risk' && (
@@ -467,6 +504,10 @@ function AppContent() {
                 </div>
               </div>
             </div>
+          )}
+
+          {alignment === 'firstaid' && (
+            <FirstAid />
           )}
 
           <Stack
