@@ -9,12 +9,15 @@ import Stack from '@mui/material/Stack';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Launch from './launch.js';
 
 function App() {
   const [alignment, setAlignment] = React.useState('risk');
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
   const [farmerType, setFarmerType] = React.useState('');
+  const [message, setMessage] = React.useState('');
   const [symptomSessionId, setSymptomSessionId] = React.useState(null);
   const [symptomMessage, setSymptomMessage] = React.useState('');
   const [symptomHistory, setSymptomHistory] = React.useState([
@@ -139,12 +142,23 @@ function App() {
     alignSelf: 'flex-start',
     mt: 1,
   };
+  
+  const handleSend = () => {
+    if (message.trim() === '') return;
+    console.log('Sent:', message);
+    setMessage('');
+  };
 
   return (
+    // <Router>
     <div className="App">
       <nav className="navbar">
         <h1>FarmerHealth</h1>
       </nav>
+      {/* <Routes>
+        <Route path="/" element={<Launch />} />
+        <Route path="/main" element={
+        <> */}
       <ToggleButtonGroup
         color="primary"
         value={alignment}
@@ -421,18 +435,71 @@ function App() {
             backgroundColor: '#f3debf',
             p: 3,
             fontFamily: "'Afacad', sans-serif",
+            position: 'relative'
           }}
           role="presentation"
         >
-          <Typography variant="h5" sx={{ color: '#59775e', mb: 1 }}>
+          <Typography variant="h5" sx={{ color: '#1f3b4f', mb: 1 }}>
             FarmerBot
           </Typography>
-          <Typography sx={{ color: '#59775e' }}>
+          <Typography sx={{ color: '#1f3b4f' }}>
             Chat sidebar ready.
           </Typography>
+          <Box sx={{ 
+          display: 'flex', 
+          gap: 1, 
+          alignItems: 'flex-end', 
+          mt: 2, 
+          position: 'absolute', 
+          bottom: 24,          
+          left: 24,            
+          right: 24, }}>
+  <textarea
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    }}
+    placeholder="Type your message..."
+    rows={2}
+    style={{
+      flex: 1,
+      resize: 'none',
+      border: '1px solid #c4b49a',
+      borderRadius: '10px',
+      padding: '10px 12px',
+      fontFamily: "'Afacad', sans-serif",
+      fontSize: '14px',
+      color: '#1f3b4f',
+      backgroundColor: '#fff',
+      outline: 'none',
+    }}
+  />
+  <Button
+    onClick={handleSend}
+    variant="contained"
+    sx={{
+      backgroundColor: '#59775e',
+      fontFamily: "'Afacad', sans-serif",
+      textTransform: 'none',
+      borderRadius: '10px',
+      height: '44px',
+      minWidth: '64px',
+    }}
+  >
+    Send
+  </Button>
+</Box>
         </Box>
       </Drawer>
+      {/* </>
+        } />
+      </Routes> */}
     </div>
+    // </Router>
   );
 }
 
