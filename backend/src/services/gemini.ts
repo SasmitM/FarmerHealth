@@ -26,13 +26,13 @@ Cover:
 - Who is most at risk and when
 - Practical takeaway or reminder
 
-Use simple language. No medical jargon.`;
+Use simple language. No medical jargon. End with a complete, concluding sentence-do not cut of mid-thought.`;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents: `${RISK_PROMPT}\n\n${userPrompt}`,
     config: {
-      maxOutputTokens: 1024,
+      maxOutputTokens: 2048,
     },
   });
 
