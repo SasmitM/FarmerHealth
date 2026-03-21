@@ -18,8 +18,17 @@ function App() {
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
   const [farmerType, setFarmerType] = React.useState('');
   const [message, setMessage] = React.useState('');
-  const navigate = useNavigate();
-  navigate('/launch');
+  const [symptomSessionId, setSymptomSessionId] = React.useState(null);
+  const [symptomMessage, setSymptomMessage] = React.useState('');
+  const [symptomHistory, setSymptomHistory] = React.useState([
+    {
+      role: 'assistant',
+      content: 'Tell me your symptoms and what farm activity happened recently.',
+    },
+  ]);
+  const [symptomActionLevel, setSymptomActionLevel] = React.useState(null);
+  const [isSymptomLoading, setIsSymptomLoading] = React.useState(false);
+
 
   const farmTypeOptions = [
     { value: 'crop', label: 'Crop Farmer' },
@@ -51,6 +60,78 @@ function App() {
     setFarmerTypeAnchor(null);
   };
 
+  const symptomContextChips = [
+    'spraying',
+    'animal contact',
+    'machinery use',
+    'chemical exposure',
+    'dust exposure',
+    'recent injury',
+  ];
+
+  const handleAddSymptomContext = (contextText) => {
+    setSymptomMessage((prev) => (prev ? `${prev}, ${contextText}` : contextText));
+  };
+
+  const handleSymptomSend = async () => {
+    const trimmedMessage = symptomMessage.trim();
+    if (!trimmedMessage) {
+      return;
+    }
+
+    try {
+      setIsSymptomLoading(true);
+
+      let sessionId = symptomSessionId;
+
+      if (!sessionId) {
+        const sessionRes = await fetch('/api/symptoms/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        if (!sessionRes.ok) throw new Error('Failed to create session');
+        const sessionData = await sessionRes.json();
+        sessionId = sessionData.session_id;
+        setSymptomSessionId(sessionId);
+      }
+
+      const updatedHistory = [...symptomHistory, { role: 'user', content: trimmedMessage }];
+      setSymptomHistory(updatedHistory);
+      setSymptomMessage('');
+
+      const messageRes = await fetch(`/api/symptoms/session/${sessionId}/message`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: trimmedMessage,
+          history: symptomHistory,
+        }),
+      });
+
+      if (!messageRes.ok) throw new Error('Failed to send message');
+      const messageData = await messageRes.json();
+
+      setSymptomHistory((prev) => [
+        ...prev,
+        { role: 'assistant', content: messageData.response },
+      ]);
+
+      if (messageData.action_level) {
+        setSymptomActionLevel(messageData.action_level);
+      }
+    } catch (error) {
+      console.error('Symptom chat error:', error);
+      setSymptomHistory((prev) => [
+        ...prev,
+        { role: 'assistant', content: 'Error: Could not process message. Please try again.' },
+      ]);
+    } finally {
+      setIsSymptomLoading(false);
+    }
+  };
+
+
+
   const submitButtonSx = {
     fontFamily: "'Afacad', sans-serif",
     textTransform: 'none',
@@ -80,10 +161,23 @@ function App() {
         onChange={handleChange}
         aria-label="Platform"
         sx={{
+          border: '2px solid #8f7c63',
+          borderRadius: '14px',
+          overflow: 'hidden',
+          backgroundColor: '#f7f3ee',
+          width: 'fit-content',
+          margin: '0 auto',
+          '& .MuiToggleButtonGroup-grouped': {
+            margin: 0,
+            border: 0,
+            borderRadius: 0,
+          },
+          '& .MuiToggleButtonGroup-grouped:not(:last-of-type)': {
+            borderRight: '2px solid #8f7c63',
+          },
           '& .MuiToggleButton-root': {
             fontFamily: "'Afacad', sans-serif",
-            color: '#1f3b4f',
-            borderColor: '#8f7c63',
+            color: '#59775e',
             backgroundColor: '#f7f3ee',
             textTransform: 'none',
             fontSize: '1.35rem',
@@ -99,10 +193,16 @@ function App() {
             fontFamily: "'Afacad', sans-serif",
             '&.Mui-selected': {
               backgroundColor: '#ecaf9a',
-              color: '#1f3b4f',
+              color: '#59775e',
             },
             '&.Mui-selected:hover': {
-              backgroundColor: '#d4956a',
+              backgroundColor: '#ecaf9a',
+            },
+            '&.Mui-selected.Mui-focusVisible': {
+              backgroundColor: '#ecaf9a',
+            },
+            '&.Mui-selected:active': {
+              backgroundColor: '#ecaf9a',
             },
           }}
         >
@@ -114,10 +214,16 @@ function App() {
             fontFamily: "'Afacad', sans-serif",
             '&.Mui-selected': {
               backgroundColor: '#ecaf9a',
-              color: '#1f3b4f',
+              color: '#59775e',
             },
             '&.Mui-selected:hover': {
-              backgroundColor: '#d4956a',
+              backgroundColor: '#ecaf9a',
+            },
+            '&.Mui-selected.Mui-focusVisible': {
+              backgroundColor: '#ecaf9a',
+            },
+            '&.Mui-selected:active': {
+              backgroundColor: '#ecaf9a',
             },
           }}
         >
@@ -129,7 +235,7 @@ function App() {
         <div className="risk-form">
           <h2>Risk Form</h2>
           <div className="form-card">
-            <div className="card-top">Crop + Region Info</div>
+            <div className="card-top">Farming Information</div>
             <div className="card-body">
               <label>Type of Farmer</label>
               <Button
@@ -139,7 +245,7 @@ function App() {
                   justifyContent: 'space-between',
                   width: '100%',
                   borderColor: '#8f7c63',
-                  color: '#1f3b4f',
+                  color: '#59775e',
                   backgroundColor: '#fff9f2',
                   textTransform: 'none',
                   fontFamily: "'Afacad', sans-serif",
@@ -159,7 +265,7 @@ function App() {
                     sx: {
                       fontFamily: "'Afacad', sans-serif",
                       backgroundColor: '#fff9f2',
-                      color: '#1f3b4f',
+                      color: '#59775e',
                       border: '1px solid #8f7c63',
                       boxShadow: 'none',
                       mt: 0.5,
@@ -173,7 +279,7 @@ function App() {
                     onClick={() => handleFarmerTypeSelect(option.value)}
                     sx={{
                       fontFamily: "'Afacad', sans-serif",
-                      color: '#1f3b4f',
+                      color: '#59775e',
                       '&:hover': { backgroundColor: '#f3debf' },
                     }}
                   >
@@ -193,21 +299,93 @@ function App() {
 
       {alignment === 'symptoms' && (
         <div className="symptoms-form">
-          <h2>Symptoms Form</h2>
           <div className="form-card">
-            <div className="card-top">Symptom Summary</div>
+            <div className="card-top">Symptoms Chat</div>
             <div className="card-body">
-              <label htmlFor="symptom-name">Symptom</label>
-              <input id="symptom-name" type="text" placeholder="e.g., yellow leaves" />
+              {symptomActionLevel && (
+                <div
+                  style={{
+                    padding: '10px 12px',
+                    borderRadius: '8px',
+                    backgroundColor:
+                      symptomActionLevel === 'call_911'
+                        ? '#ffcccc'
+                        : symptomActionLevel === 'er'
+                          ? '#ffe6cc'
+                          : symptomActionLevel === 'urgent_care'
+                            ? '#ffffcc'
+                            : '#ccffcc',
+                    color:
+                      symptomActionLevel === 'call_911'
+                        ? '#cc0000'
+                        : symptomActionLevel === 'er'
+                          ? '#cc6600'
+                          : symptomActionLevel === 'urgent_care'
+                            ? '#cccc00'
+                            : '#00cc00',
+                    fontWeight: 600,
+                    marginBottom: '8px',
+                  }}
+                >
+                  Alert Level: {symptomActionLevel.toUpperCase()}
+                </div>
+              )}
 
-              <label htmlFor="symptom-days">Duration (days)</label>
-              <input id="symptom-days" type="number" placeholder="e.g., 4" />
+              <label>Conversation</label>
+              <div className="symptom-chat-window">
+                {symptomHistory.map((entry, index) => (
+                  <div
+                    key={`${entry.role}-${index}`}
+                    className={`chat-bubble ${entry.role === 'user' ? 'chat-user' : 'chat-assistant'}`}
+                  >
+                    <strong>{entry.role === 'user' ? 'You' : 'Assistant'}:</strong> {entry.content}
+                  </div>
+                ))}
+              </div>
 
-              <label htmlFor="symptom-detail">Details</label>
-              <textarea id="symptom-detail" rows="4" placeholder="Describe what you see" />
+              <label htmlFor="symptom-message">Message</label>
+              <textarea
+                id="symptom-message"
+                rows="4"
+                value={symptomMessage}
+                onChange={(event) => setSymptomMessage(event.target.value)}
+                placeholder="Example: I have a cough and headache after spraying yesterday."
+                disabled={isSymptomLoading}
+              />
 
-              <Button variant="contained" type="button" sx={submitButtonSx}>
-                Submit
+              <label>Quick Context</label>
+              <div className="context-chip-row">
+                {symptomContextChips.map((chip) => (
+                  <Button
+                    key={chip}
+                    variant="outlined"
+                    type="button"
+                    onClick={() => handleAddSymptomContext(chip)}
+                    disabled={isSymptomLoading}
+                    sx={{
+                      fontFamily: "'Afacad', sans-serif",
+                      textTransform: 'none',
+                      borderColor: '#8f7c63',
+                      color: '#59775e',
+                      backgroundColor: '#fff9f2',
+                      borderRadius: '999px',
+                      px: 1.5,
+                      py: 0.4,
+                    }}
+                  >
+                    {chip}
+                  </Button>
+                ))}
+              </div>
+
+              <Button
+                variant="contained"
+                type="button"
+                sx={submitButtonSx}
+                onClick={handleSymptomSend}
+                disabled={isSymptomLoading}
+              >
+                {isSymptomLoading ? 'Sending...' : 'Send Message'}
               </Button>
             </div>
           </div>
@@ -256,11 +434,11 @@ function App() {
           }}
           role="presentation"
         >
-          <Typography variant="h5" sx={{ color: '#1f3b4f', mb: 1, fontFamily: "'Afacad'"}}>
+          <Typography variant="h5" sx={{ color: '#1f3b4f', mb: 1 }}>
             FarmerBot
           </Typography>
-          <Typography sx={{ color: '#1f3b4f', fontFamily: "'Afacad'"}}>
-            What is your question?
+          <Typography sx={{ color: '#1f3b4f' }}>
+            Chat sidebar ready.
           </Typography>
           <Box sx={{ 
           display: 'flex', 
