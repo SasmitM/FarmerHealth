@@ -1,0 +1,13 @@
+{
+  "id": "chemical-splash",
+  "name": "Chemical Splash",
+  "overview": "Fertilizers, cleaning agents, fuels, and other farm chemicals can splash on skin or into eyes. Flush immediately.",
+  "steps": [
+    { "title": "Move from source", "detail": "Get the person away from the chemical to prevent further exposure." },
+    { "title": "Flush skin", "detail": "Remove contaminated clothing. Rinse skin with water for at least 15–20 minutes." },
+    { "title": "Flush eyes", "detail": "Hold eyelids open and rinse with clean water for 15–20 minutes. Use an eye wash station if available." },
+    { "title": "Check the label", "detail": "Some chemicals have specific first aid instructions. Follow them if you have the container." }
+  ],
+  "when_to_seek_help": "Call 911 if: severe pain, vision changes, large skin area affected, or chemical was swallowed. Call poison control (1-800-222-1222) for guidance on milder exposures.",
+  "prevention_tips": ["Wear goggles and chemical-resistant gloves when handling chemicals.", "Have an eyewash station and emergency shower near chemical storage.", "Store chemicals in labeled containers away from food and water."]
+}

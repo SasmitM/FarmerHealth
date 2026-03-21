@@ -1,0 +1,13 @@
+{
+  "id": "respiratory-distress",
+  "name": "Respiratory Distress",
+  "overview": "Dust, mold, chemicals, or allergens in the barn or field can cause coughing, wheezing, or difficulty breathing.",
+  "steps": [
+    { "title": "Move to fresh air", "detail": "Get the person outdoors or to a well-ventilated area away from dust, fumes, or mold." },
+    { "title": "Loosen clothing", "detail": "Help them sit upright and breathe more easily." },
+    { "title": "If they have an inhaler", "detail": "Help them use it as prescribed. One or two puffs may relieve symptoms." },
+    { "title": "Stay calm", "detail": "Anxiety can worsen breathing. Reassure them and keep them calm." }
+  ],
+  "when_to_seek_help": "Call 911 if: lips or fingernails turning blue, severe difficulty breathing, cannot speak in full sentences, or condition worsens quickly. Go to urgent care for mild but persistent symptoms.",
+  "prevention_tips": ["Wear a properly fitted N95 or P100 respirator in dusty areas (grain bins, hay, barns).", "Ventilate confined spaces before entering.", "Know the signs of silo gas and never enter a silo without proper precautions."]
+}

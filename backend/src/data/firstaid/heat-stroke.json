@@ -1,0 +1,13 @@
+{
+  "id": "heat-stroke",
+  "name": "Heat Stroke",
+  "overview": "Working long hours in the sun can lead to heat exhaustion or heat stroke. Heat stroke is a medical emergency.",
+  "steps": [
+    { "title": "Move to shade or indoors", "detail": "Get the person out of the sun and into a cooler place." },
+    { "title": "Cool the body", "detail": "Remove excess clothing. Apply cool, wet cloths to skin. Fan them. If possible, immerse in cool (not cold) water." },
+    { "title": "Hydrate if alert", "detail": "If the person is conscious and can swallow, give small sips of water. Do not give alcohol or caffeine." },
+    { "title": "Monitor", "detail": "Watch for vomiting, seizures, or loss of consciousness." }
+  ],
+  "when_to_seek_help": "Call 911 if: hot, dry skin and no sweating; confusion or slurred speech; seizures; loss of consciousness; temperature over 103°F. Heat stroke can cause brain damage or death if not treated quickly.",
+  "prevention_tips": ["Drink water often; don't wait until thirsty.", "Take breaks in the shade every 1–2 hours.", "Wear a hat and light-colored, loose clothing.", "Work during cooler parts of the day when possible."]
+}

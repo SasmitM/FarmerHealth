@@ -1,0 +1,14 @@
+{
+  "id": "pesticide-exposure",
+  "name": "Pesticide Exposure",
+  "overview": "Pesticides can enter the body through skin contact, inhalation, or ingestion. Quick action reduces absorption and harm.",
+  "steps": [
+    { "title": "Move to fresh air", "detail": "Get the person away from the sprayed area immediately." },
+    { "title": "Remove contaminated clothing", "detail": "Take off clothing that has pesticide on it. Cut if needed to avoid pulling over the head." },
+    { "title": "Wash skin thoroughly", "detail": "Rinse exposed skin with water for at least 15 minutes. Use soap when available." },
+    { "title": "If in eyes", "detail": "Flush eyes with clean water for 15–20 minutes. Hold eyelids open." },
+    { "title": "If swallowed", "detail": "Do NOT induce vomiting unless a poison control or medical professional says so. Rinse mouth with water." }
+  ],
+  "when_to_seek_help": "Call 911 immediately if: difficulty breathing, confusion, seizures, unconsciousness, severe vomiting, or skin that blisters. Call poison control (1-800-222-1222) for milder exposure.",
+  "prevention_tips": ["Wear chemical-resistant gloves, long sleeves, and pants when mixing or spraying.", "Use a respirator mask (not just a dust mask) when handling chemicals.", "Read the label and follow re-entry times before entering treated areas."]
+}

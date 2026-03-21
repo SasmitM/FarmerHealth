@@ -1,0 +1,13 @@
+{
+  "id": "animal-bites",
+  "name": "Animal Bites",
+  "overview": "Bites from livestock, dogs, or wild animals can cause infection and may carry rabies. Clean immediately.",
+  "steps": [
+    { "title": "Stop the bleeding", "detail": "Apply pressure with a clean cloth if bleeding." },
+    { "title": "Wash the wound", "detail": "Rinse thoroughly with soap and water for several minutes." },
+    { "title": "Apply antibiotic ointment", "detail": "Cover with a clean bandage." },
+    { "title": "Identify the animal", "detail": "Note the type of animal and whether it can be observed for rabies. Report to local health department if unknown or wild animal." }
+  ],
+  "when_to_seek_help": "See a doctor for any bite that breaks the skin. Go to ER if: deep puncture, face or hand bite, unknown animal, or animal acting strangely. Rabies vaccination may be required.",
+  "prevention_tips": ["Approach animals calmly; avoid sudden movements.", "Stay out of pens when animals are stressed or feeding.", "Vaccinate dogs and livestock for rabies as recommended."]
+}

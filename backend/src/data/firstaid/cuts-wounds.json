@@ -1,0 +1,13 @@
+{
+  "id": "cuts-wounds",
+  "name": "Cuts & Wounds",
+  "overview": "Farm tools, wire, and equipment can cause cuts. Clean wounds promptly to prevent infection.",
+  "steps": [
+    { "title": "Stop the bleeding", "detail": "Apply direct pressure with a clean cloth or gauze for 10–15 minutes." },
+    { "title": "Clean the wound", "detail": "Rinse with clean running water. Remove dirt or debris. Soap around (not inside) the wound." },
+    { "title": "Apply antibiotic ointment", "detail": "Use if available. Cover with a clean bandage." },
+    { "title": "Watch for infection", "detail": "Watch for redness, swelling, pus, fever, or increasing pain. Change bandage daily."
+  ],
+  "when_to_seek_help": "Go to urgent care or ER if: bleeding won't stop after 15 minutes, wound is deep or gaping, cut is on face or over a joint, object is embedded, or you see signs of infection. Tetanus shot may be needed if it's been more than 5 years.",
+  "prevention_tips": ["Wear sturdy gloves when handling wire, tools, or machinery.", "Keep tools sharp—dull blades slip and cause worse cuts.", "Store sharp objects safely."]
+}
