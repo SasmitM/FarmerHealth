@@ -68,7 +68,7 @@ Write 1-2 paragraph summary of the most serious long-term risk this farmer faces
 Use plain language. No jargon. Always COMPLETE YOUR SENTENCES - never cut off mid-thought.`;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     contents: `${RISK_PROMPT}\n\n${userPrompt}`,
     config: {
       maxOutputTokens: 2048,
@@ -106,7 +106,7 @@ export async function symptomChat(messages: ChatMessage[]): Promise<string> {
   }));
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     contents,
     config: {
       systemInstruction: SYMPTOM_SYSTEM_PROMPT,
