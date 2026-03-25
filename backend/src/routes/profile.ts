@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getRiskSummary } from '../services/openai';
+import { getRiskSummary } from '../services/gemini';
 import type { FarmType } from '../types/profile';
 
 const router = Router();

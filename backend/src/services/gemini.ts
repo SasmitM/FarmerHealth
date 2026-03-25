@@ -1,8 +1,8 @@
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 import type { FarmType } from '../types/profile';
 import type { ChatMessage } from '../types/symptoms';
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 function ensureCompleteSentence(text: string): string {
   const trimmed = text.trim();
@@ -67,18 +67,17 @@ Write 1-2 paragraph summary of the most serious long-term risk this farmer faces
 
 Use plain language. No jargon. Always COMPLETE YOUR SENTENCES - never cut off mid-thought.`;
 
-  const response = await client.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: RISK_PROMPT },
-      { role: 'user', content: userPrompt },
-    ],
-    max_tokens: 2048,
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: `${RISK_PROMPT}\n\n${userPrompt}`,
+    config: {
+      maxOutputTokens: 2048,
+    },
   });
 
-  const text = response.choices[0]?.message?.content;
+  const text = response.text;
   if (!text) {
-    throw new Error('No text in OpenAI response');
+    throw new Error('No text in Gemini response');
   }
 
   return ensureCompleteSentence(sanitizeSummary(text));
@@ -101,23 +100,23 @@ export async function symptomChat(messages: ChatMessage[]): Promise<string> {
     throw new Error('At least one message required');
   }
 
-  const openaiMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-    { role: 'system', content: SYMPTOM_SYSTEM_PROMPT },
-    ...messages.map((m) => ({
-      role: m.role as 'user' | 'assistant',
-      content: m.content,
-    })),
-  ];
+  const contents = messages.map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }));
 
-  const response = await client.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: openaiMessages,
-    max_tokens: 1024,
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents,
+    config: {
+      systemInstruction: SYMPTOM_SYSTEM_PROMPT,
+      maxOutputTokens: 1024,
+    },
   });
 
-  const text = response.choices[0]?.message?.content;
+  const text = response.text;
   if (!text) {
-    throw new Error('No text in OpenAI response');
+    throw new Error('No text in Gemini response');
   }
 
   return text;
