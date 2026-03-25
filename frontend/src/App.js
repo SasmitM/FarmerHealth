@@ -6,7 +6,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import Drawer from '@mui/material/Drawer';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
@@ -30,10 +29,8 @@ function AppContent() {
   useScrollAnimation();
   
   const [alignment, setAlignment] = React.useState('risk');
-  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [farmerTypeAnchor, setFarmerTypeAnchor] = React.useState(null);
   const [farmerType, setFarmerType] = React.useState('');
-  const [message, setMessage] = React.useState('');
   const [riskSummaryOpen, setRiskSummaryOpen] = React.useState(false);
   const [riskSummary, setRiskSummary] = React.useState('');
   const [isRiskLoading, setIsRiskLoading] = React.useState(false);
@@ -222,12 +219,6 @@ function AppContent() {
     borderRadius: '10px',
     alignSelf: 'flex-start',
     mt: 1,
-  };
-
-  const handleSend = () => {
-    if (message.trim() === '') return;
-    console.log('Sent:', message);
-    setMessage('');
   };
 
   return (
