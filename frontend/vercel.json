@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://REPLACE_ME.onrender.com/api/:path*"
+      "destination": "https://https://farmerhealth.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
